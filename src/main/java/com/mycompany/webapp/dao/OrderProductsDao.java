@@ -16,4 +16,6 @@ public interface OrderProductsDao {
 	
 	//리뷰 작성 상태 수정
 	public void update(Reviews review);
+	//리뷰 개수 리턴
+	public int count(int state);
 }

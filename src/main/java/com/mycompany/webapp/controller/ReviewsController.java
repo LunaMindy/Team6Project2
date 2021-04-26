@@ -34,12 +34,9 @@ private final Logger logger = LoggerFactory.getLogger(ReviewsController.class);
 	
 	//리뷰 목록
 	@GetMapping("")
-	private Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue ="") String keyword) {
-
-
-		
+	private Map<String, Object> list(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue ="") String keyword) {		
 		int totalRows = reviewsService.getCount(keyword);
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		
 		List<Reviews> list = reviewsService.getList(pager, keyword);
 		
@@ -50,6 +47,20 @@ private final Logger logger = LoggerFactory.getLogger(ReviewsController.class);
 		return map;
 	}
 
+	//리뷰 개수 리턴
+	@GetMapping("/readcount")
+	public int readCount(int countNo) {
+		int result;
+		if(countNo == 0) {
+			result = orderProductsService.getCount(2);
+		} else if(countNo == 1) {
+			result = orderProductsService.getCount(0);
+		}  else {
+			result = orderProductsService.getCount(1);
+		}
+		return result;
+	}
+	
 	//리뷰 조회
 	@GetMapping("/{reviewNo}")
     public Reviews read(@PathVariable int reviewNo) {	

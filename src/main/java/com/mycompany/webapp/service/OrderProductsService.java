@@ -33,4 +33,8 @@ public class OrderProductsService {
 	public void updateReview(Reviews review) {
 		orderProductsDao.update(review);
 	}
+
+	public int getCount(int state) {
+		return orderProductsDao.count(state);
+	}
 }

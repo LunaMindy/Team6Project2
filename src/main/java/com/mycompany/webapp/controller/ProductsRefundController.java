@@ -43,13 +43,27 @@ public class ProductsRefundController {
 		}
 		
 		int totalRows = refundService.getCount(stateval, reason);
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		List<ProductsRefund> list = refundService.getList(pager, stateval, reason);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
 		map.put("refunds", list);
 		return map;
+	}
+	
+	//환불 개수 리턴
+	@GetMapping("/readcount")
+	public int readCount(int countNo) {
+		int result;
+		if(countNo == 0) {
+			result = refundService.getCount(2, "전체");
+		} else if(countNo == 1) {
+			result = refundService.getCount(0, "전체");
+		}  else {
+			result = refundService.getCount(1, "전체");
+		}		
+		return result;
 	}
 
 	//환불 조회
