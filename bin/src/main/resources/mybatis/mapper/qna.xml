@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="boards"> -->
+<mapper namespace="com.mycompany.webapp.dao.QnaDao">
+
+
+	<select id="selectByPage" parameterType="pager" resultType="qna">
+		select rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
+		from (
+			select rownum as rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
+			from (
+				select 	
+					qna_no as qnaNo,
+					user_id as userId,
+					email,
+					qna_title as qnaTitle,
+					qna_content as qnaContent,
+					qna_regdate as qnaRegdate,
+					answer_state as answerState,
+					answer_date as answerDate,
+					answer_content as answerContent
+					from qna
+					order by qnaRegdate desc
+			)
+			where rownum &lt;= #{endRowNo}
+		)
+		where rnum &gt;= #{startRowNo}
+	</select>
+	
+	<select id="count" resultType="int">
+   		select count(*) from qna
+	</select>
+	
+	<select id="selectByQnaNo" resultType="qna">
+      select 
+			user_id as userId,
+			email,
+			qna_title as qnaTitle,
+			qna_content as qnaContent,
+			qna_regdate as qnaRegdate,
+			answer_state as answerState,
+			answer_date as answerDate,
+			answer_content as answerContent
+	from qna
+    where qna_no=#{qnaNo}
+   </select>
+		
+	<insert id="insert" parameterType="qna">
+      insert into qna (qna_no, user_id, email, qna_title, qna_content, qna_regdate, answer_state, answer_date, answer_content)
+      values (seq_qna_qnaNo.nextval, #{userId}, #{email}, #{qnaTitle}, #{qnaContent}, #{qnaRegdate}, 1, sysdate, #{answerContent})
+	</insert>
+	
+	<delete id="deleteByQnaNo" parameterType="int">
+      delete from qna where qna_no=#{qnaNo}
+	</delete>
+	 
+	<update id="update" parameterType="qna">
+      update 
+      		qna 
+      set 
+      		answer_content = #{answerContent}, answer_date = sysdate
+      where 
+      		qna_no=#{qnaNo}
+   </update>
+   
+
+</mapper>

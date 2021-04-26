@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+					 
+<mapper namespace="com.mycompany.webapp.dao.ProductsRefundDao">
+	
+	<select id="selectByPage" parameterType="pager" resultType="productsRefund">
+      select rnum, orderNo, refundState, refundDate, refundReason 
+      from (
+          select rownum as rnum, orderNo, refundState, refundDate, refundReason
+          from (
+             select order_no as orderNo, refund_state as refundState, refund_date as refundDate, refund_reason as refundReason 
+             from products_refund
+             order by order_no desc
+          )
+          where rownum &lt;= #{endRowNo}
+      ) 
+      where rnum &gt;= #{startRowNo}
+   </select>
+   
+   <select id="count" resultType="int">
+   		select count(*) from products_refund
+   </select>
+   
+  <insert id="insert" parameterType="productsRefund">
+  		insert into products_refund
+  		values (#{orderNo}, 0, sysdate, #{refundReason})
+  </insert> 
+   
+   <select id="selectByOno" parameterType="int" resultType="productsRefund">
+   		select order_no as orderNo, refund_state as refundState, refund_date as refundDate, refund_reason as refundReason 
+      from products_refund
+      where order_no = #{orderNo}
+   </select>
+   
+   <update id="update" parameterType="productsRefund">
+   		update products_refund set refund_state=1 where order_no = #{orderNo}
+   </update>
+   
+</mapper>
