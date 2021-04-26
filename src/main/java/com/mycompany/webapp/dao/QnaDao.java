@@ -30,4 +30,8 @@ public interface QnaDao{
 
 	public int update(Qna qna);
 	
+	public int totalcount();
+	
+	public int stateCount(int answerState);
+	
 }

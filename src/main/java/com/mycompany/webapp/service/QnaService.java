@@ -43,7 +43,7 @@ public class QnaService{
 	 public int update(Qna qna) {
 	    return qnaDao.update(qna);
 	 }
-	 
+
 		
 		//	   public List<Qna> getList(Pager pager, String keyword) {
 		//    return qnaDao.selectByPage(pager,keyword);
@@ -51,4 +51,14 @@ public class QnaService{
 		// public int getCount(String keyword) {
 		// return qnaDao.count(keyword);
 		//	}
+	 
+	 public int getTotalCount() {
+		int result = qnaDao.totalcount();
+		return result;
+	 }
+
+	 public int getTotalStateCount(int answerState) {
+		int result = qnaDao.stateCount(answerState);
+		return result;
+	 }
 }

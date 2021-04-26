@@ -21,4 +21,8 @@ public interface OrdersDao {
 	//환불 상테 수정
 	public void update(ProductsRefund refund);
 	
+	
+	public int totalcount();
+	public int stateCount(int orderState);
+	
 }

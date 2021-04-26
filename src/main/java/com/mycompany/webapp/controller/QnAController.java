@@ -68,7 +68,7 @@ public class QnAController {
  	 		
  		   int totalRows = qnaService.getStatevalCount(stateval);
  		   logger.info(""+stateval);
- 		   Pager pager = new Pager(5, 5, totalRows, pageNo);
+ 		   Pager pager = new Pager(10, 5, totalRows, pageNo);
  	      List<Qna> list = qnaService.getStatevalList(pager, stateval);
  	      Map<String,Object> map = new HashMap<>();
  	      map.put("pager", pager);
@@ -119,5 +119,18 @@ public class QnAController {
 		   logger.info(String.valueOf(qnaNo));
 		   logger.info("삭제컨트롤러2 실행");
 	   }
+	   
+	   @GetMapping("/readCount")
+		public String readCount(int countNo) {
+			String result;
+			if(countNo == 0) {
+				result = String.valueOf(qnaService.getTotalCount());
+			}else if(countNo == 1){
+				result = String.valueOf(qnaService.getTotalStateCount(0));
+			}else {
+				result = String.valueOf(qnaService.getTotalStateCount(1));
+			}
+			return result;
+		}
 	
 }

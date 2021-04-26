@@ -28,7 +28,10 @@
 				 	  	 or order_date LIKE '%'||#{keyword}||'%' or order_state LIKE '%'||#{keyword}||'%'
 				 	  	  or order_No LIKE '%'||#{keyword}||'%'
 					</if>
-					
+					ORDER BY 
+						order_date desc,
+						order_no asc
+        	
 			)
 			where rownum &lt;= #{pager.endRowNo}
 		)
@@ -69,5 +72,16 @@
   		order_state = 1
   	where order_no = #{orderNo}
   </update>
+  
+  <select id="totalcount" resultType="int">
+		SELECT count(*) 
+		FROM orders
+	</select>
+	
+	<select id="stateCount" resultType="int">
+		SELECT count(*) 
+		FROM orders
+		WHERE order_State = #{orderState}
+	</select>
   
 </mapper>

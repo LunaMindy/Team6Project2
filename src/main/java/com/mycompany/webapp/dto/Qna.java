@@ -14,6 +14,8 @@ public class Qna {
 	private String answerContent;
 	private Date answerDate;
 	
+	private String userName;
+	
 	
 	public int getQnaNo() {
 		return qnaNo;
@@ -69,6 +71,12 @@ public class Qna {
 	}
 	public void setAnswerState(String answerState) {
 		this.answerState = answerState;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

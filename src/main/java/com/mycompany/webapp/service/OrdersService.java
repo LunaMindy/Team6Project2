@@ -43,6 +43,17 @@ public class OrdersService {
 	public void updateRefund(ProductsRefund refund) {
 		ordersDao.update(refund);
 	}
+
+	public int getTotalCount() {
+		int result = ordersDao.totalcount();
+		return result;
+	}
+
+	public int getTotalStateCount(int orderState) {
+		int result = ordersDao.stateCount(orderState);
+		return result;
+	}
+
 	
 	
 }
