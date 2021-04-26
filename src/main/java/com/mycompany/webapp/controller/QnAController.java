@@ -68,7 +68,7 @@ public class QnAController {
  	 		
  		   int totalRows = qnaService.getStatevalCount(stateval);
  		   logger.info(""+stateval);
- 		   Pager pager = new Pager(5, 5, totalRows, pageNo);
+ 		   Pager pager = new Pager(10, 5, totalRows, pageNo);
  	      List<Qna> list = qnaService.getStatevalList(pager, stateval);
  	      Map<String,Object> map = new HashMap<>();
  	      map.put("pager", pager);

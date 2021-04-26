@@ -28,6 +28,11 @@
 				 	  	 or order_date LIKE '%'||#{keyword}||'%' or order_state LIKE '%'||#{keyword}||'%'
 				 	  	  or order_No LIKE '%'||#{keyword}||'%'
 					</if>
+					order by
+						order_date desc,
+						order_no desc
+					
+						
 					
 			)
 			where rownum &lt;= #{pager.endRowNo}

@@ -39,7 +39,7 @@ private final Logger logger = LoggerFactory.getLogger(ReviewsController.class);
 
 		
 		int totalRows = reviewsService.getCount(keyword);
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		
 		List<Reviews> list = reviewsService.getList(pager, keyword);
 		

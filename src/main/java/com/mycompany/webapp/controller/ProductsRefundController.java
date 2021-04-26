@@ -43,7 +43,7 @@ public class ProductsRefundController {
 		}
 		
 		int totalRows = refundService.getCount(stateval, reason);
-		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		Pager pager = new Pager(10, 5, totalRows, pageNo);
 		List<ProductsRefund> list = refundService.getList(pager, stateval, reason);
 		
 		Map<String, Object> map = new HashMap<>();

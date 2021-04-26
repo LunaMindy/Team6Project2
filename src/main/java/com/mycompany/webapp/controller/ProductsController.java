@@ -147,7 +147,7 @@ public class ProductsController {
 		return product;
 	}
 	
-	@GetMapping("/readCount")
+	@GetMapping("/readcount")
 	public String readCount(int cno) {
 		String result;
 		if(cno == 1 || cno == 2 || cno ==3 || cno == 4) {

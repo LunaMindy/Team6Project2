@@ -44,7 +44,7 @@ public class OrderController {
 	@GetMapping("/keyword")
 	public Map<String, Object> list(@RequestParam(defaultValue="") String keyword,@RequestParam(defaultValue = "1") int pageNo){
 		int totalRows = ordersService.getTotalRows(keyword);
-		Pager pager = new Pager(5,5,totalRows, pageNo);
+		Pager pager = new Pager(10,5,totalRows, pageNo);
 		List<Orders> list = ordersService.getOrdersPage(pager,keyword);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pager", pager);
@@ -55,7 +55,6 @@ public class OrderController {
 
 	@GetMapping("/{orderNo}")
 	public List<OrderProducts> read(@PathVariable int orderNo) {
-		logger.info("컨트롤러 실ㅇ햏ㅇ");
 		List<OrderProducts> list = ordersService.getOrders(orderNo);
 		logger.info(String.valueOf(orderNo));
 		return list;
