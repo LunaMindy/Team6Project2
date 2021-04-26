@@ -40,5 +40,12 @@
 			and	product_no = #{productNo}
 	</update>
 	
+	<!-- 리뷰 작성 상태 카운트 -->
+	<select id="count" parameterType="int" resultType="int">
+		select count(*) from order_products
+		<if test='state != 2'>
+			where review_state = #{state} 
+		</if>
+	</select>
 	
 </mapper>
