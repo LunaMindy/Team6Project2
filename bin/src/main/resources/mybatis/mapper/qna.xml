@@ -4,8 +4,7 @@
 <!-- <mapper namespace="boards"> -->
 <mapper namespace="com.mycompany.webapp.dao.QnaDao">
 
-
-	<select id="selectByPage" parameterType="pager" resultType="qna">
+	<select id="selectStatevalByPage"  resultType="qna">
 		select rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
 		from (
 			select rownum as rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
@@ -21,17 +20,63 @@
 					answer_date as answerDate,
 					answer_content as answerContent
 					from qna
-					order by qnaRegdate desc
+					<if test='stateval != 2'>
+					where answer_state = #{stateval}
+					</if>
 			)
-			where rownum &lt;= #{endRowNo}
+			where rownum &lt;= #{pager.endRowNo}
 		)
-		where rnum &gt;= #{startRowNo}
+		where rnum &gt;= #{pager.startRowNo}
+	</select>
+	
+	<select id="statevalCount" resultType="int">
+   		select count(*) from qna 
+   		<if test='stateval != 2'>
+			where answer_State = #{stateval}
+		</if>
+	</select>
+	
+	<!-- 	<select id="selectByPage"  resultType="qna">
+		select rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
+		from (
+			select rownum as rnum,qnaNo,userId,email,qnaTitle,qnaContent,qnaRegdate,answerState,answerDate,answerContent
+			from (
+				select 	
+					qna_no as qnaNo,
+					user_id as userId,
+					email,
+					qna_title as qnaTitle,
+					qna_content as qnaContent,
+					qna_regdate as qnaRegdate,
+					answer_state as answerState,
+					answer_date as answerDate,
+					answer_content as answerContent
+					from qna
+					<if test='keyword == ""'>
+					</if>
+					<if test='keyword != ""'>
+						WHERE 
+				 	  	 qna_Content LIKE '%'||#{keyword}||'%' or qna_Title LIKE '%'||#{keyword}||'%' 
+				 	  	 or answer_State LIKE '%'||#{keyword}||'%' or user_id LIKE '%'||#{keyword}||'%'
+					</if>
+			)
+			where rownum &lt;= #{pager.endRowNo}
+		)
+		where rnum &gt;= #{pager.startRowNo}
 	</select>
 	
 	<select id="count" resultType="int">
-   		select count(*) from qna
-	</select>
+   		select count(*) from qna 
+   		<if test='keyword == ""'>
+		</if>
+		<if test='keyword != ""'>
+			WHERE 
+	 	  	 qna_Content LIKE '%'||#{keyword}||'%' or qna_Title LIKE '%'||#{keyword}||'%'  or answer_State LIKE '%'||#{keyword}||'%' 
+	 	  	  or user_id LIKE '%'||#{keyword}||'%'
+		</if>
+	</select> -->
 	
+
 	<select id="selectByQnaNo" resultType="qna">
       select 
 			user_id as userId,
@@ -41,7 +86,8 @@
 			qna_regdate as qnaRegdate,
 			answer_state as answerState,
 			answer_date as answerDate,
-			answer_content as answerContent
+			answer_content as answerContent,
+			qna_no as qnaNo
 	from qna
     where qna_no=#{qnaNo}
    </select>
@@ -59,10 +105,9 @@
       update 
       		qna 
       set 
-      		answer_content = #{answerContent}, answer_date = sysdate
+      		answer_content = #{answerContent}, answer_date = sysdate, answer_state = 1
       where 
       		qna_no=#{qnaNo}
    </update>
-   
 
 </mapper>

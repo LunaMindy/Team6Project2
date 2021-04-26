@@ -14,23 +14,38 @@ public class Products {
 	private Date productRegdate;
 	private int productHitcount;
 	private int productSellcount;
-	
+
+
 	private String categoryName;
-	
+
+	private MultipartFile[] battach;
 	private int imgNo;
 	private String imgOname;
 	private String imgSname;
 	private String imgType;
-	private String imgState;
-	
+	private int imgState;
+
 	private String keyword;
+
+	private int[] state = new int[5];
 	
 	
-	
-	public String getImgState() {
+	public int[] getState() {
+		return state;
+	}
+	public void setState(int[] state) {
+		this.state = state;
+	}
+	public MultipartFile[] getBattach() {
+		return battach;
+	}
+	public void setBattach(MultipartFile[] battach) {
+		this.battach = battach;
+	}
+	public int getImgState() {
 		return imgState;
 	}
-	public void setImgState(String imgState) {
+	public void setImgState(int imgState) {
 		this.imgState = imgState;
 	}
 	public String getKeyword() {

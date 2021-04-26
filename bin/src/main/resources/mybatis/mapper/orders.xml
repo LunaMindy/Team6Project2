@@ -20,44 +20,49 @@
 					road_address as roadAddress,
 					detail_address as detailAddress
 					from orders
-					order by orderDate desc
+					<if test='keyword == ""'>
+					</if>
+					<if test='keyword != ""'>
+						WHERE 
+				 	  	 user_id LIKE '%'||#{keyword}||'%' or road_address LIKE '%'||#{keyword}||'%' 
+				 	  	 or order_date LIKE '%'||#{keyword}||'%' or order_state LIKE '%'||#{keyword}||'%'
+				 	  	  or order_No LIKE '%'||#{keyword}||'%'
+					</if>
+					
 			)
-			where rownum &lt;= #{endRowNo}
+			where rownum &lt;= #{pager.endRowNo}
 		)
-		where rnum &gt;= #{startRowNo}
+		where rnum &gt;= #{pager.startRowNo}
   	</select>
 	
 	<select id = "count" resultType="int">
-		select count(*) from orders	 
+		select count(*) from orders	
+		<if test='keyword == ""'>
+		</if>
+		<if test='keyword != ""'>
+			WHERE 
+				user_id LIKE '%'||#{keyword}||'%' or road_address LIKE '%'||#{keyword}||'%' 
+				 or order_date LIKE '%'||#{keyword}||'%' or order_state LIKE '%'||#{keyword}||'%'
+				  or order_No LIKE '%'||#{keyword}||'%'
+		</if> 
 	</select>
 	
-	<select id="selectByOrderNo" parameterType="int" resultType="order">
+	<select id="selectByOrderNo" parameterType="int" resultType="orderProduct">
 		select
-			user_id as userId,
-			all_price as allPrice, 
-			order_date as orderDate, 
-			order_state as orderState,
-			zip_code as zipCode,
-			road_address as roadAddress,
-			detail_address as detailAddress
-		from orders
-		where order_no=#{orderNo}
+			  o.user_id as userId,
+			o.order_date as orderDate, 
+			o.order_no as orderNo,
+			op.order_no as orderNo,
+             op.product_no as productNo, 
+             op.amount as amount, 
+             op.price as price, 
+             op.review_state as reviewState,
+             p.product_name as productName
+             from orders o, order_products op, products p
+			where op.order_no = o.order_no
+	      and op.product_no = p.product_no
+			  and o.order_no =#{orderNo}
 	</select>
-	
-	<!-- <insert id="insert" parameterType="order">
-		insert into orders (order_no, user_id, order_date, all_price, order_state, zip_code, road_address, detail_address)
-		values(seq_orders_order_no.nextval, #{userId}, #{orderDate}, #{allPrice}, 0, #{zipCode}, #{roadAddress}, #{detailAddress})
-	</insert> -->
-	
-	<delete id="deleteByOrderNo" parameterType="int">
-		delete from orders where order_no=#{orderNo}
-	</delete>
-	
-	<!-- <update id="update" parameterType="int">
-	  	update orders set
-	  		order_state = 1
-	  	where order_no = #{orderNo}
- 	</update> -->
   
   <update id="update" parameterType="productsRefund">
   	update orders set

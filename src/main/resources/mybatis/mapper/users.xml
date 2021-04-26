@@ -7,7 +7,18 @@
 
 <mapper namespace="com.mycompany.webapp.dao.UsersDao">
 	
-
+	<select id="count" resultType="int">
+		SELECT count(*) 
+		FROM users
+	</select>
+	
+	<select id="stateCount" resultType="int">
+		SELECT count(*) 
+		FROM users
+		WHERE delete_state = #{deleteState}
+	</select>
+	
+	
 	<insert id="insert" parameterType="user">
 		INSERT INTO users(
 			user_id, 
@@ -49,6 +60,25 @@
 			NULL
 			)
 	</insert>
+	
+	<update id="updateUser" parameterType="user">
+		UPDATE 
+			users
+		SET
+			user_id = #{userId},
+			user_name = #{userName},
+			user_phone = #{userPhone},
+			zip_code = #{zipCode},
+			road_address = #{roadAddress},
+			detail_address = #{detailAddress},
+			user_enable = #{userEnabled},
+			user_authority = #{userAuthority},
+			user_account = #{userAccount},
+			user_bank = #{userBank},
+			account_name = #{accountName}
+		WHERE
+			user_id = #{userId}
+	</update>
 
 	<!-- <select id="selectAll" resultType="user">
 		select
@@ -60,6 +90,106 @@
 		from Users
 		order by desc
 	</select> -->
+	
+	<select id="selectByPage" resultType="user">
+        SELECT  rnum, 
+        	 	user_id as userId,
+                user_name as userName,
+                user_ssn1 as userSsn1,
+                delete_state as deleteState,
+                user_regdate as userRegdate
+         FROM (
+             SELECT rownum as rnum,  
+        	 	  	user_id,
+                 	user_name,
+                 	user_ssn1,
+                 	delete_state,
+                 	user_regdate
+             FROM (
+                SELECT 
+                 		user_id,
+                 		user_name,
+                 		user_ssn1,
+                 		delete_state,
+                 		user_regdate
+                FROM	users
+                ORDER BY
+                		user_regdate desc,
+                		user_id desc
+             )
+             WHERE rownum &lt;= #{endRowNo}
+           
+         )
+         WHERE rnum &gt;= #{startRowNo}
+     </select>  
+     
+     <select id="selectByUserPage" resultType="user">
+        SELECT  rnum, 
+        	 	user_id as userId,
+                user_name as userName,
+                user_ssn1 as userSsn1,
+                delete_state as deleteState,
+                user_regdate as userRegdate
+         FROM (
+             SELECT rownum as rnum,  
+        	 	  	user_id,
+                 	user_name,
+                 	user_ssn1,
+                 	delete_state,
+                 	user_regdate
+             FROM (
+                SELECT 
+                 		user_id,
+                 		user_name,
+                 		user_ssn1,
+                 		delete_state,
+                 		user_regdate
+                FROM	users
+                WHERE
+                		user_id = #{userId}
+                ORDER BY
+                		user_regdate desc,
+                		user_id desc
+             )
+             WHERE rownum &lt;= #{pager.endRowNo}
+           
+         )
+         WHERE rnum &gt;= #{pager.startRowNo}
+     </select>  
+     
+     <select id="selectByStatePage" resultType="user">
+        SELECT  rnum, 
+        	 	user_id as userId,
+                user_name as userName,
+                user_ssn1 as userSsn1,
+                delete_state as deleteState,
+                user_regdate as userRegdate
+         FROM (
+             SELECT rownum as rnum,  
+        	 	  	user_id,
+                 	user_name,
+                 	user_ssn1,
+                 	delete_state,
+                 	user_regdate
+             FROM (
+                SELECT 
+                 		user_id,
+                 		user_name,
+                 		user_ssn1,
+                 		delete_state,
+                 		user_regdate
+                FROM	users
+                WHERE
+                		delete_state = #{deleteState}
+                ORDER BY
+                		user_regdate desc,
+                		user_id desc
+             )
+             WHERE rownum &lt;= #{pager.endRowNo}
+         )
+         WHERE rnum &gt;= #{pager.startRowNo}
+     </select>  
+     
 
 	<select id="selectByOverlapId" parameterType="user" resultType="int">
 		SELECT
@@ -89,7 +219,23 @@
 	<select id="selectByUserid" parameterType="string" resultType="user">
 		SELECT
 			user_id as userId,
-			user_name as userName
+			user_name as userName,
+			user_password as userPassword,
+			user_phone as userPhone, 
+			zip_code as zipCode,
+			road_address as roadAddress,
+			detail_address as detailAddress,
+			user_ssn1 as userSsn1, 
+			user_ssn2 as userSsn2,
+			user_regdate as userRegdate,
+			user_account as userAccount,
+			user_bank as userBank,
+			account_name as accountName,
+			user_authority as userAuthority, 
+			user_enable as userEnable,
+			delete_state as deleteState, 
+			delete_date as deleteDate,
+			delete_reason as deleteReason
 		FROM 
 			users
 		WHERE 
@@ -110,6 +256,8 @@
 		WHERE
 			user_id = #{userId}
 	</update>
+	
+	
 	
 	<update id="updatePassword" parameterType="user">
 		UPDATE 
@@ -137,6 +285,17 @@
 			delete_state = 1,
 			delete_date = sysdate,
 			delete_reason = #{deleteReason}
+		where
+			user_id = #{userId}
+	</update>
+	
+	<update id="delete">
+		UPDATE 
+			users 
+		SET
+			user_enable = 0,
+			delete_state = 1,
+			delete_date = sysdate
 		where
 			user_id = #{userId}
 	</update>

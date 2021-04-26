@@ -23,8 +23,14 @@ public interface ProductsDao{
 	public int updateState(int productNo);
 	public int deleteByPno(int productNo);
 	public int count(int cno);
-	public List<Products> selectBySearchPage(@Param("pager")Pager pager,@Param("keyword")String keyword);
+	public int totalCount();
+	
+	public Products selectByPnoDetail(int productNo);
+	public List<Products> selectByPageAll(Pager pager);
 	
 	public int countKeyword(String keyword);
-	public Products selectByPnoDetail(int productNo);		
+	public int countCategoryKeyword(@Param("categoryNo")int categoryNo, @Param("keyword")String keyword);
+	
+	public List<Products> selectBySearchPage(@Param("pager")Pager pager,@Param("keyword")String keyword);
+	public List<Products> selectByCategorySearchPage(@Param("pager")Pager pager,@Param("categoryNo")int categoryNo, @Param("keyword")String keyword);
 }

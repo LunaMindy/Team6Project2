@@ -39,14 +39,24 @@ public class ProductsService {
 		return list;
 	}
 	
+
+	public List<Products> getProductsAllList(Pager pager) {
+		List<Products> list = productsDao.selectByPageAll(pager);
+		return list;
+	}
+	
 	public List<Products> getProductsBestList(Pager pager, int cno) {
 		List<Products> list = productsDao.selectByBestPage(pager, cno);
 		return list;
 	}
 	
-
-	public int insertImg(ProductsImg productImg) {
-		int result = productsImgDao.insert(productImg);
+	public int insert(Products product) {
+		int result = productsDao.insert(product);
+		return result;
+	}	
+	
+	public int insertImg(Products product) {
+		int result = productsImgDao.insert(product);
 		return result;
 	}
 
@@ -87,5 +97,46 @@ public class ProductsService {
 	public void addPsellCount(int productNo, int amount) {
 		productsDao.updatePsellcount(productNo, amount);
 		logger.info("amount:" + amount);
-	}	
+	}
+
+	public int update(Products product) {
+		int result = productsDao.update(product);
+		return result;
+		
+	}
+
+	public int delete(int pid) {
+		int result = productsDao.deleteByPno(pid);
+		return result;
+		
+	}
+
+	public int getCount() {
+		int result = productsDao.totalCount();
+		return result;
+	}
+
+	public List<ProductsImg> getImgList(int pid) {
+		List<ProductsImg> list =  productsImgDao.selectByPnoImg(pid);
+		return list;
+	}
+
+	public int updateImg(Products product) {
+		int result = productsImgDao.update(product);
+		return result;
+	}
+
+	public int getTotalCategoryKeywordCount(int categoryNo, String keyword) {
+		int result = productsDao.countCategoryKeyword(categoryNo, keyword);
+		return result;
+		
+	}
+
+	public List<Products> getProductCategoryKeyword(Pager pager, int categoryNo, String keyword) {
+		List<Products> list = productsDao.selectByCategorySearchPage(pager, categoryNo, keyword);
+		return list;
+	}
+
+
+
 }

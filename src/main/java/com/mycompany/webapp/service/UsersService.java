@@ -1,11 +1,15 @@
 package com.mycompany.webapp.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.UsersDao;
+import com.mycompany.webapp.dto.Pager;
+import com.mycompany.webapp.dto.Products;
 import com.mycompany.webapp.dto.Users;
 
 @Service
@@ -54,4 +58,51 @@ public class UsersService {
 		int result = usersDao.selectByOverlapId(user);
 		return result;
 	}
+
+	public int getTotalCount() {
+		int result = usersDao.count();
+		return result;
+	}
+
+	public int getTotalStateCount(int userState) {
+		int result = usersDao.stateCount(userState);
+		return result;
+	}
+
+	public List<Users> getUsersList(Pager pager) {
+		List<Users> list = usersDao.selectByPage(pager);
+		return list;
+	}
+	
+	public List<Users> getUser(Pager pager, String idKeywordVal) {
+		List<Users> list = usersDao.selectByUserPage(pager, idKeywordVal);
+		return list;
+	}
+	
+	public List<Users> getUsersStateList(Pager pager, int userState) {
+		List<Users> list = usersDao.selectByStatePage(pager, userState);
+		return list;
+	}
+
+	public int insert(Users user) {
+		int result = usersDao.insert(user);
+		return result;
+		
+	}
+
+	public int updateUser(Users user) {
+		int result = usersDao.updateUser(user);
+		return result;
+		
+	}
+
+	public int delete(int uid) {
+		int result = usersDao.delete(uid);
+		return result;
+	}
+
+
+
+	
+
 }

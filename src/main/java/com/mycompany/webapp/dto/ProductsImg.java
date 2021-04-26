@@ -1,11 +1,10 @@
 package com.mycompany.webapp.dto;
 
-import org.springframework.web.multipart.MultipartFile;
 
 public class ProductsImg {
 	
 	private int imgNo;
-	private MultipartFile[] battach;
+	private int productNo;
 	private int imgState;
 	private String imgOname;
 	private String imgSname;
@@ -17,7 +16,12 @@ public class ProductsImg {
 	public void setImgNo(int imgNo) {
 		this.imgNo = imgNo;
 	}
-	
+	public int getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
 	public int getImgState() {
 		return imgState;
 	}
@@ -42,12 +46,11 @@ public class ProductsImg {
 	public void setImgType(String imgType) {
 		this.imgType = imgType;
 	}
-	public MultipartFile[] getBattach() {
-		return battach;
-	}
-	public void setBattach(MultipartFile[] battach) {
-		this.battach = battach;
-	}
+	
+	
+	
+	
+	
 	
 	
 	

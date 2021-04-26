@@ -17,6 +17,22 @@
 			 img_no DESC
 	</select>
 	
+	<select id="selectByPnoImg" parameterType="int" resultType="productImg">
+		 SELECT 
+			img_no as imgNo,
+			product_no as productNo,
+            img_state as imgState,
+			img_oname as imgOname,
+			img_sname as imgSname,
+			img_type as imgType
+		FROM
+			 products_img
+		WHERE
+			product_no = #{pid}
+		ORDER BY 
+			 img_state asc
+	</select>
+	
 	 <select id="selectByImgno" parameterType="int" resultType="productImg">
 		SELECT 
 			img_no,
@@ -31,12 +47,7 @@
 	</select>
 	
 
-	<insert id="insert" parameterType="productImg">
-		<!-- 시퀀스 넘버를 전달하여 사용하기 위해 -->
-		<selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
-			select seq_products_img_img_no.nextval from dual
-		</selectKey>
-
+	<insert id="insert" parameterType="product">
 		INSERT INTO products_img
 			(img_no,
 			product_no,
@@ -45,9 +56,9 @@
 			img_sname,
 			img_type)
 		VALUES(
-            #{imgNo},
-			10,
-            0,
+            seq_products_img_img_no.nextval,
+			seq_products_product_no.currval,
+            #{imgState},
 			#{imgOname},
 			#{imgSname},
 			#{imgType}
@@ -59,11 +70,14 @@
 		UPDATE 
 			products_img
 		SET
+			img_state = #{imgState},			
 			img_oname = #{imgOname},
 			img_sname = #{imgSname},
-			img_type = #{imgType},
+			img_type = #{imgType}
 		WHERE
-			img_no = #{imgNo}
+			product_no = #{productNo}
+		AND
+			img_state = #{imgState}
 	</update>
 	
 	<delete id="deleteByImgno" parameterType="int">

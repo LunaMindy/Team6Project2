@@ -75,6 +75,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, "/qna").hasAnyRole("ADMIN")
 			.antMatchers(HttpMethod.DELETE, "/qna/*").hasAnyRole("ADMIN")
 			
+			.antMatchers(HttpMethod.POST, "/products").hasAnyRole("ADMIN")
+			.antMatchers(HttpMethod.PUT, "/products").hasAnyRole("ADMIN")
+			.antMatchers(HttpMethod.DELETE, "/products/*").hasAnyRole("ADMIN")
+			
+			.antMatchers(HttpMethod.POST, "/users").hasAnyRole("ADMIN")
+			.antMatchers(HttpMethod.PUT, "/users").hasAnyRole("ADMIN")
+			.antMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("ADMIN")
+			
 			//그 이외의 모든 경로 허가
 			.antMatchers("/").permitAll();
 	}
