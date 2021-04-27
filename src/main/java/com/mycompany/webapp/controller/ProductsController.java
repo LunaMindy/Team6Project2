@@ -118,13 +118,13 @@ public class ProductsController {
 				try {
 					File file;
 					if(product.getProductCategoryNo() == 1) {
-						file = new File("C:/Users/pc/Desktop/temp/캔들/" + product.getImgSname());
+						file = new File("D:/상품사진들/캔들/" + product.getImgSname());
 					}else if(product.getProductCategoryNo() == 2) {
-						file = new File("C:/Users/pc/Desktop/temp/조명/" + product.getImgSname());
+						file = new File("D:/상품사진들/조명/" + product.getImgSname());
 					}else if(product.getProductCategoryNo() == 3) {
-						file = new File("C:/Users/pc/Desktop/temp/트리/" + product.getImgSname());
+						file = new File("D:/상품사진들/트리/" + product.getImgSname());
 					}else {
-						file = new File("C:/Users/pc/Desktop/temp/기타/" + product.getImgSname());
+						file = new File("D:/상품사진들/기타/" + product.getImgSname());
 					}
 					mf[i].transferTo(file);
 				} catch (Exception e) {
@@ -169,13 +169,13 @@ public class ProductsController {
 			String battachsname = list.get(i).getImgSname();      
 			String battachspath = "";
 			if(product.getProductCategoryNo() == 1) {
-				battachspath = "D:/상품사진들/캔들/" + battachoname;
+				battachspath = "D:/상품사진들/캔들/" + battachsname;
 			}else if(product.getProductCategoryNo() == 2) {
-				battachspath = "D:/상품사진들/조명/" + battachoname;
+				battachspath = "D:/상품사진들/조명/" + battachsname;
 			}else if(product.getProductCategoryNo() == 3) {
-				battachspath = "D:/상품사진들/트리/" + battachoname;
+				battachspath = "D:/상품사진들/트리/" + battachsname;
 			}else{
-				battachspath = "D:/상품사진들/기타/" + battachoname;
+				battachspath = "D:/상품사진들/기타/" + battachsname;
 			}
 			String battachtype = list.get(i).getImgType();
 
@@ -189,8 +189,6 @@ public class ProductsController {
 			is.close();
 			os.flush();
 			os.close();
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,16 +198,13 @@ public class ProductsController {
 
 	@PutMapping("")
 	public Products update(Products product) {
-
-		logger.info("실행실행");
+		
 		product.setProductPrice(product.getProductPrice().replaceAll(",", ""));
-
 		productsService.update(product);
 
 		if(product.getBattach() != null && !(product.getBattach().length == 0)) {
 			MultipartFile[] mf = product.getBattach();
 			for(int i=0; i<mf.length; i++) {
-				logger.info(String.valueOf("상태값:" + product.getState()[i]));
 				product.setImgOname(mf[i].getOriginalFilename());
 				product.setImgSname(new Date().getTime() + "-" + mf[i].getOriginalFilename());
 				product.setImgType("jpg");
@@ -226,26 +221,22 @@ public class ProductsController {
 				}
 				try {
 					File file;
+					logger.info(String.valueOf(product.getProductCategoryNo()));
 					if(product.getProductCategoryNo() == 1) {
-						file = new File("C:/Users/pc/Desktop/temp/캔들/" + product.getImgSname());
+						file = new File("D:/상품사진들/캔들/" + product.getImgSname());
 					}else if(product.getProductCategoryNo() == 2) {
-						file = new File("C:/Users/pc/Desktop/temp/조명/" + product.getImgSname());
+						file = new File("D:/상품사진들/조명/" + product.getImgSname());
 					}else if(product.getProductCategoryNo() == 3) {
-						file = new File("C:/Users/pc/Desktop/temp/트리/" + product.getImgSname());
+						file = new File("D:/상품사진들/트리/" + product.getImgSname());
 					}else {
-						file = new File("C:/Users/pc/Desktop/temp/기타/" + product.getImgSname());
+						file = new File("D:/상품사진들/기타/" + product.getImgSname());
 					}
 					mf[i].transferTo(file);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				//				logger.info(String.valueOf("번호"+product.getProductNo()));
-				//				logger.info(String.valueOf("oname"+product.getImgOname()));
-				//				logger.info(String.valueOf("sname"+product.getImgSname()));
-				//				logger.info(String.valueOf("상태"+product.getImgState()));
 				productsService.updateImg(product);
 			}
-
 		}
 
 		product.setBattach(null);
