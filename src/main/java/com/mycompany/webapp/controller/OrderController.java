@@ -58,7 +58,6 @@ public class OrderController {
 		List<OrderProducts> list = ordersService.getOrders(orderNo);
 		logger.info(String.valueOf(orderNo));
 		return list;
-	
 	}
 	
 	@GetMapping("/readCount")

@@ -19,41 +19,36 @@
 		ORDER BY 
 			 product_no DESC
 	</select>
-	
+
 	<select id="selectBestProduct" resultType="product">
 		SELECT
             p.product_no as productNo,
 			p.product_name as productName, 
 			to_char(p.product_price , '999,999,999,999,999') as productPrice, 
 			p.product_category_no as productCategoryNo,
-			i.img_oname as imgOname, 
-			i.img_sname as imgSname, 
-			i.img_type as imgType
+			product_sellcount as productSellcount
         FROM(
             SELECT 
                 product_no,
                 product_name,
                 product_category_no, 
-                product_price
+                product_price,
+                product_sellcount
             FROM(
                 SELECT 
                     product_no,
                     product_name, 
                     product_category_no,
-                    product_price
+                    product_price,
+                    product_sellcount
                 FROM
                     products
                 ORDER BY 
                     product_sellcount DESC
             )
             WHERE 
-                rownum &lt;= 4
+                rownum &lt;= 7
         ) p
-        JOIN 	
-	  		products_img i
-	  	ON	
-	  		p.product_no = i.product_no AND i.img_state = 1
-	  		
 	</select>
 	
 	<select id="selectNewProduct" resultType="product">
@@ -62,35 +57,32 @@
 			p.product_name as productName, 
 			to_char(p.product_price , '999,999,999,999,999') as productPrice, 
 			p.product_category_no as productCategoryNo,
-			i.img_oname as imgOname, 
-			i.img_sname as imgSname, 
-			i.img_type as imgType
+			product_regdate as productRegdate
+		
         FROM(
             SELECT 
                 product_no,
                 product_name,
                 product_category_no, 
-                product_price
+                product_price,
+                product_regdate
             FROM(
                 SELECT 
                     product_no,
                     product_name,
                     product_category_no, 
-                    product_price
+                    product_price,
+                    product_regdate
                 FROM
                     products
                 ORDER BY 
                     product_regdate DESC
             )
             WHERE 
-                rownum &lt;= 12
+                rownum &lt;= 7
         ) p
-        JOIN 	
-	  		products_img i
-	  	ON	
-	  		p.product_no = i.product_no AND i.img_state = 1
 	</select>
-
+	
 
 	<!-- ÆäÀÌÂ¡ -->
   	<select id="selectByPage"  resultType="product">

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -256,4 +257,19 @@ public class ProductsController {
 	public void delete(@PathVariable int pid) {
 		productsService.delete(pid);
 	}
+	
+	
+	@GetMapping("/pcount")
+	public Map<String, Object> bestMain() {
+		
+		List<Products> blist = productsService.getBestProductList();
+		List<Products> nlist = productsService.getNewProductList();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("blist", blist);
+		map.put("nlist", nlist); 
+		return map;
+		
+	}
+
 }
