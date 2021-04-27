@@ -35,8 +35,6 @@ public class OrdersService {
 	
 	public List<OrderProducts> getOrders(int orderNo) {
 		List<OrderProducts> list = ordersDao.selectByOrderNo(orderNo);
-		logger.info(String.valueOf(orderNo));
-		logger.info("서비스 실행");
 		return list;
 	}
 

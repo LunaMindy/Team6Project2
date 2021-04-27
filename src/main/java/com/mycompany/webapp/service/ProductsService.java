@@ -96,7 +96,6 @@ public class ProductsService {
 
 	public void addPsellCount(int productNo, int amount) {
 		productsDao.updatePsellcount(productNo, amount);
-		logger.info("amount:" + amount);
 	}
 
 	public int update(Products product) {

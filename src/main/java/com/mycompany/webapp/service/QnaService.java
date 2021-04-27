@@ -36,7 +36,6 @@ public class QnaService{
 	 }
 	 
 	 public int delete(int qnaNo) {
-		   logger.info("삭제서비스실행");
 	    return qnaDao.deleteByQnaNo(qnaNo);
 	 }
 	 

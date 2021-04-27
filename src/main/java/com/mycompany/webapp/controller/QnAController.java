@@ -58,7 +58,6 @@ public class QnAController {
  	 	@GetMapping("/stateval")
  	   public Map<String, Object> statevalList(@RequestParam(defaultValue="") String state, @RequestParam(defaultValue="1") int pageNo) {
  	 		int stateval = 2;
- 	 		logger.info(state);
  	 		if(state.equals("미답변")) {
  	 			stateval = 0;
  	 		}else if(state.equals("답변 완료")){
@@ -66,7 +65,6 @@ public class QnAController {
  	 		}
  	 		
  		   int totalRows = qnaService.getStatevalCount(stateval);
- 		   logger.info(""+stateval);
  		   Pager pager = new Pager(10, 5, totalRows, pageNo);
  	      List<Qna> list = qnaService.getStatevalList(pager, stateval);
  	      Map<String,Object> map = new HashMap<>();
@@ -103,15 +101,11 @@ public class QnAController {
 	   
 	   @DeleteMapping("/{qnaNo}")
 	   public void delete(@PathVariable int qnaNo) {
-		   logger.info("삭제컨트롤러 실행");
 		   qnaService.delete(qnaNo);
-		   logger.info(String.valueOf(qnaNo));
-		   logger.info("삭제컨트롤러2 실행");
 	   }
 	   
 	   @GetMapping("/readCount")
 		public String readCount(int countNo) {
-		   logger.info(String.valueOf(countNo));
 			String result;
 			if(countNo == 0) {
 				result = String.valueOf(qnaService.getTotalCount());

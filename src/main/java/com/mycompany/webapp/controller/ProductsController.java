@@ -88,7 +88,6 @@ public class ProductsController {
 					categoryNo = 4;
 				}
 
-				logger.info(String.valueOf(categoryNo + " " + keyword));
 				totalRows = productsService.getTotalCategoryKeywordCount(categoryNo, keyword);
 		
 				Pager pager = new Pager(10, 5, totalRows, pageNo);
@@ -220,7 +219,6 @@ public class ProductsController {
 				}
 				try {
 					File file;
-					logger.info(String.valueOf(product.getProductCategoryNo()));
 					if(product.getProductCategoryNo() == 1) {
 						file = new File("D:/상품사진들/캔들/" + product.getImgSname());
 					}else if(product.getProductCategoryNo() == 2) {
