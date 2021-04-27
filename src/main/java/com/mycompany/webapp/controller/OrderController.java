@@ -56,7 +56,6 @@ public class OrderController {
 	@GetMapping("/{orderNo}")
 	public List<OrderProducts> read(@PathVariable int orderNo) {
 		List<OrderProducts> list = ordersService.getOrders(orderNo);
-		logger.info(String.valueOf(orderNo));
 		return list;
 	}
 	

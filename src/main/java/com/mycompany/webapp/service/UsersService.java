@@ -90,8 +90,8 @@ public class UsersService {
 		
 	}
 
-	public int updateUser(Users user) {
-		int result = usersDao.updateUser(user);
+	public int updateUser(Users user, int userState) {
+		int result = usersDao.updateUser(user, userState);
 		return result;
 		
 	}

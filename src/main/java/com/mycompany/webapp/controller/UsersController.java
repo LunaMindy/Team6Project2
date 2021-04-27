@@ -59,7 +59,6 @@ public class UsersController {
 					userState = 1;
 				}
 				totalRows = usersService.getTotalStateCount(userState);
-				logger.info(String.valueOf(totalRows));
 				Pager pager = new Pager(10, 5, totalRows, pageNo);
 				List<Users> list = usersService.getUsersStateList(pager, userState);
 				map.put("users", list);
@@ -92,7 +91,8 @@ public class UsersController {
 
 	@PutMapping("")
 	public Users update(@RequestBody Users user) {
-		usersService.updateUser(user);
+		int userState = user.getDeleteState();
+		usersService.updateUser(user, userState);
 		return user;
 	}
 

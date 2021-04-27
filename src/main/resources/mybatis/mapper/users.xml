@@ -61,23 +61,28 @@
 			)
 	</insert>
 	
-	<update id="updateUser" parameterType="user">
+	<update id="updateUser">
 		UPDATE 
 			users
 		SET
-			user_id = #{userId},
-			user_name = #{userName},
-			user_phone = #{userPhone},
-			zip_code = #{zipCode},
-			road_address = #{roadAddress},
-			detail_address = #{detailAddress},
-			user_enable = #{userEnabled},
-			user_authority = #{userAuthority},
-			user_account = #{userAccount},
-			user_bank = #{userBank},
-			account_name = #{accountName}
+			user_id = #{user.userId},
+			user_name = #{user.userName},
+			user_phone = #{user.userPhone},
+			zip_code = #{user.zipCode},
+			road_address = #{user.roadAddress},
+			detail_address = #{user.detailAddress},
+			user_enable = #{user.userEnabled},
+			user_authority = #{user.userAuthority},
+			user_account = #{user.userAccount},
+			user_bank = #{user.userBank},
+			account_name = #{user.accountName}
+			<if test="userState == 1">
+				 ,delete_state = 1
+				 ,delete_date = sysdate
+				 ,delete_reason = #{user.deleteReason}
+      		</if>
 		WHERE
-			user_id = #{userId}
+			user_id = #{user.userId}
 	</update>
 
 	<!-- <select id="selectAll" resultType="user">

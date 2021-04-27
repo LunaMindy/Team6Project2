@@ -16,7 +16,7 @@ public interface UsersDao {
 	public int update(String userId); 
 	public void updateWithdrawal(@Param("userId") String userId, @Param("deleteReason") String deleteReason);
 	public int update(Users user);
-	public int updateUser(Users user);
+	public int updateUser(@Param("user")Users user, @Param("userState")int userState);
 	public String findById(@Param("userName") String userName, @Param("userPhone")String userPhone); 
 	public int selectByUserCount(Users user);
 	public int updatePassword(Users user);
