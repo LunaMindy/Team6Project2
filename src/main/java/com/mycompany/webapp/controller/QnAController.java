@@ -55,7 +55,6 @@ public class QnAController {
 //	   }
 //	 
 	 	
-	    
  	 	@GetMapping("/stateval")
  	   public Map<String, Object> statevalList(@RequestParam(defaultValue="") String state, @RequestParam(defaultValue="1") int pageNo) {
  	 		int stateval = 2;
@@ -78,9 +77,6 @@ public class QnAController {
  	   }
 	 	 
 	 	
-	 	
-	 	
-	 	
 		/*
 		 * @GetMapping("/{keyword}") public Map<String, Object>
 		 * searchList(@RequestParam(defaultValue="1") int pageNo, @PathVariable String
@@ -92,13 +88,6 @@ public class QnAController {
 		 * map.put("qna", list); //qna in qna return map; }
 		 */
 	
-	   @PostMapping("")
-	   //@RequestBody: 요청 HTTP 본문에 JSON이 포함되어 있을 경우
-	   public Qna create(@RequestBody Qna qna) {
-		   qnaService.insert(qna);
-		  return qna;
-	   }
-	   
 	   @GetMapping("/{qnaNo}")
 	   public Qna read(@PathVariable int qnaNo) {
 		   Qna qna = qnaService.getQna(qnaNo);
@@ -122,6 +111,7 @@ public class QnAController {
 	   
 	   @GetMapping("/readCount")
 		public String readCount(int countNo) {
+		   logger.info(String.valueOf(countNo));
 			String result;
 			if(countNo == 0) {
 				result = String.valueOf(qnaService.getTotalCount());
