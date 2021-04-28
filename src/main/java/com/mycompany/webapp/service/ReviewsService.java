@@ -27,10 +27,6 @@ public class ReviewsService {
 		List<Reviews> list = reviewsDao.selectByPage(pager, keyword);
 		return list;
 	}
-	
-	public void insert(Reviews review) {
-		reviewsDao.insert(review);
-	}
 
 	public Reviews getReview(int reviewNo) {
 		return reviewsDao.selectByRno(reviewNo);

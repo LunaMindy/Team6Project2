@@ -13,7 +13,6 @@ public interface ReviewsDao {
 	
 	public int count(String keyword);	
 	public List<Reviews> selectByPage(@Param("pager") Pager pager, @Param("keyword") String keyword);
-	public void insert(Reviews reivew);
 	public Reviews selectByRno(int ReviewtNo);
 	public void update(Reviews review);
 	public void deleteReview(int reviewNo);

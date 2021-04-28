@@ -68,14 +68,6 @@ private final Logger logger = LoggerFactory.getLogger(ReviewsController.class);
     	return review;
     }
 	
-	//리뷰 생성
-	@PostMapping("")
-	public Reviews create(@RequestBody Reviews review) {
-		reviewsService.insert(review);
-    	orderProductsService.updateReview(review);
-		return review;
-	}
-	
     //리뷰 수정
     @PutMapping("")
     public Reviews update(@RequestBody Reviews review) {

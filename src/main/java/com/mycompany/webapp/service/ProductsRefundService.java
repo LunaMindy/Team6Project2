@@ -22,10 +22,6 @@ public class ProductsRefundService {
 		return refundDao.selectByPage(pager, stateval, reason);
 	}
 
-	public void insert(ProductsRefund refund) {
-		refundDao.insert(refund);
-	}
-	
 	public ProductsRefund getRefund(int orderNo) {
 		return refundDao.selectByOno(orderNo);
 	}

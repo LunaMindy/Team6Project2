@@ -72,15 +72,7 @@ public class ProductsRefundController {
 		ProductsRefund refund= refundService.getRefund(orderNo);
     	return refund;
     }
-	
-	//환불 생성
-	@PostMapping("")
-	public ProductsRefund create(@RequestBody ProductsRefund refund) {
-		refundService.insert(refund);
-		ordersService.updateRefund(refund);
-		return refund;
-	}	
-    
+	    
 	//환불 수정
     @PutMapping("")
     public ProductsRefund update(@RequestBody ProductsRefund refund) {
