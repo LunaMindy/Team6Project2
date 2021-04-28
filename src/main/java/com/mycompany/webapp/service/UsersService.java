@@ -101,6 +101,21 @@ public class UsersService {
 		return result;
 	}
 
+	public int getTotalStateKeywordCount(int userState, String idKeywordVal) {
+		int result = usersDao.stateKeywordCount(userState, idKeywordVal);
+		return result;
+	}
+
+	public List<Users> getUsersStateKeywordList(Pager pager, int userState, String idKeywordVal) {
+		List<Users> list = usersDao.selectByStateKeywordPage(pager, userState, idKeywordVal);
+		return list;
+	}
+
+	public int getKeywordCount(String idKeywordVal) {
+		int result = usersDao.keywordCount(idKeywordVal);
+		return result;
+	}
+
 
 
 	

@@ -26,5 +26,8 @@ public interface UsersDao {
 	public int delete(int uid);
 	public int stateCount(@Param("deleteState")int userState);
 	public List<Users> selectByStatePage(@Param("pager")Pager pager, @Param("deleteState")int userState);
-	public List<Users> selectByUserPage(@Param("pager")Pager pager, @Param("userId")String idKeywordVal);
+	public List<Users> selectByUserPage(@Param("pager")Pager pager, @Param("keyword")String idKeywordVal);
+	public int stateKeywordCount(@Param("deleteState")int userState, @Param("keyword")String idKeywordVal);
+	public List<Users> selectByStateKeywordPage(@Param("pager")Pager pager,@Param("deleteState") int userState,@Param("keyword") String idKeywordVal);
+	public int keywordCount(@Param("keyword")String idKeywordVal);
 }

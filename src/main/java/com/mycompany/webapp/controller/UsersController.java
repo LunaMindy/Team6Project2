@@ -39,13 +39,7 @@ public class UsersController {
 		int userState;
 		Map<String, Object> map = new HashMap<>();
 
-		if(!idKeywordVal.equals("")) {
-			totalRows = 1;
-			Pager pager = new Pager(10, 5, totalRows, pageNo);
-			List<Users> list = usersService.getUser(pager, idKeywordVal);
-			map.put("users", list);
-			map.put("pager", pager);
-		}else {
+		if(idKeywordVal.equals("")) {	//키워드가 없으면
 			if(userStateVal.equals("전체")) {	//카테고리가 전체이면 AllList
 				totalRows = usersService.getTotalCount();
 				Pager pager = new Pager(10, 5, totalRows, pageNo);
@@ -64,6 +58,26 @@ public class UsersController {
 				map.put("users", list);
 				map.put("pager", pager);
 			}
+		}else {
+			if(userStateVal.equals("전체")) {	//카테고리가 전체이면 AllList
+				totalRows = usersService.getKeywordCount(idKeywordVal);
+				Pager pager = new Pager(10, 5, totalRows, pageNo);
+				List<Users> list = usersService.getUser(pager, idKeywordVal);
+				map.put("users", list);
+				map.put("pager", pager);
+			}else {	//그렇지 않으면 카테고리에 맞는 List
+				if(userStateVal.equals("회원")) {
+					userState = 0;
+				}else {
+					userState = 1;
+				}
+				totalRows = usersService.getTotalStateKeywordCount(userState, idKeywordVal);
+				Pager pager = new Pager(10, 5, totalRows, pageNo);
+				List<Users> list = usersService.getUsersStateKeywordList(pager, userState, idKeywordVal);
+				map.put("users", list);
+				map.put("pager", pager);
+			}
+			
 		}
 
 		return map;
