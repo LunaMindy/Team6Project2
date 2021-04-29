@@ -26,6 +26,7 @@ import com.mycompany.webapp.service.UsersService;
 @RequestMapping("/users")
 public class UsersController {
 	private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
+	
 	@Autowired
 	private UsersService usersService;
 
@@ -33,7 +34,6 @@ public class UsersController {
 	public Map<String, Object> list(@RequestParam(defaultValue="1") int pageNo,
 			@RequestParam(defaultValue="") String userStateVal,
 			@RequestParam(defaultValue="") String idKeywordVal) {
-
 
 		int totalRows;
 		int userState;
@@ -93,6 +93,7 @@ public class UsersController {
 	@GetMapping("/readCount")
 	public String readCount(int countNo) {
 		String result;
+		//0, 1, 2를 받아 전체, 회원, 탈퇴 구분
 		if(countNo == 0) {
 			result = String.valueOf(usersService.getTotalCount());
 		}else if(countNo == 1){
