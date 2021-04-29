@@ -44,11 +44,6 @@
    		</if>
    </select>
    
-  <insert id="insert" parameterType="productsRefund">
-  		insert into products_refund
-  		values (#{orderNo}, 0, sysdate, #{refundReason})
-  </insert> 
-   
    <select id="selectByOno" parameterType="int" resultType="productsRefund">
    		select r.order_no as orderNo, r.refund_state as refundState, r.refund_date as refundDate, r.refund_reason as refundReason, o.user_id as userId 
       from products_refund r, orders o
@@ -59,6 +54,5 @@
    <update id="update" parameterType="productsRefund">
    		update products_refund set refund_state=#{refundState} where order_no = #{orderNo}
    </update>
-   
    
 </mapper>

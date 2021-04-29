@@ -18,6 +18,19 @@
 		WHERE delete_state = #{deleteState}
 	</select>
 	
+	<select id="keywordCount" resultType="int">
+		SELECT count(*) 
+		FROM users
+		WHERE user_id LIKE '%'||#{keyword}||'%' 
+	</select>
+	
+	<select id="stateKeywordCount" resultType="int">
+		SELECT count(*) 
+		FROM users
+		WHERE delete_state = #{deleteState}
+		AND	user_id LIKE '%'||#{keyword}||'%' 
+	</select>
+	
 	
 	<insert id="insert" parameterType="user">
 		INSERT INTO users(
@@ -151,7 +164,7 @@
                  		user_regdate
                 FROM	users
                 WHERE
-                		user_id = #{userId}
+                		user_id LIKE '%'||#{keyword}||'%' 
                 ORDER BY
                 		user_regdate desc,
                 		user_id desc
@@ -194,6 +207,43 @@
          )
          WHERE rnum &gt;= #{pager.startRowNo}
      </select>  
+     
+      <select id="selectByStateKeywordPage" resultType="user">
+        SELECT  rnum, 
+        	 	user_id as userId,
+                user_name as userName,
+                user_ssn1 as userSsn1,
+                delete_state as deleteState,
+                user_regdate as userRegdate
+         FROM (
+             SELECT rownum as rnum,  
+        	 	  	user_id,
+                 	user_name,
+                 	user_ssn1,
+                 	delete_state,
+                 	user_regdate
+             FROM (
+                SELECT 
+                 		user_id,
+                 		user_name,
+                 		user_ssn1,
+                 		delete_state,
+                 		user_regdate
+                FROM	users
+                WHERE
+                		delete_state = #{deleteState}
+                AND
+                		user_id LIKE '%'||#{keyword}||'%' 
+                ORDER BY
+                		user_regdate desc,
+                		user_id desc
+             )
+             WHERE rownum &lt;= #{pager.endRowNo}
+           
+         )
+         WHERE rnum &gt;= #{pager.startRowNo}
+     </select>  
+     
      
 
 	<select id="selectByOverlapId" parameterType="user" resultType="int">

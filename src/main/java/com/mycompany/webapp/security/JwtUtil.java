@@ -74,7 +74,7 @@ public class JwtUtil {
 	}
 	
 	//테스트
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		//토큰 생성
 		String jwt = createToken("admin@naver.com");
 		System.out.println(jwt);
@@ -88,5 +88,5 @@ public class JwtUtil {
 			String uid = getUid(jwt);
 			logger.info(uid);
 		}
-	}
+	}*/
 }
