@@ -40,11 +40,6 @@
     where rnum &gt;= #{pager.startRowNo}
 	</select>
 	
-	<insert id="insert">
-		insert into reviews
-		values (seq_reviews_review_no.nextval, #{orderNo}, #{productNo}, #{userId}, #{reviewContent}, sysdate)
-	</insert>
-	
 	<select id="selectByRno" parameterType="int" resultType="review">
 		select r.review_no as reviewNo, 
 					 r.order_no as orderNo,

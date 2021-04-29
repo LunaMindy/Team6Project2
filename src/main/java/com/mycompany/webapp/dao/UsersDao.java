@@ -10,24 +10,15 @@ import com.mycompany.webapp.dto.Users;
 
 @Mapper
 public interface UsersDao {
-	public int insert(Users user); 
-	public Users selectByUserid(String userId); 
-	public List<Users> selectAll(); 
-	public int update(String userId); 
-	public void updateWithdrawal(@Param("userId") String userId, @Param("deleteReason") String deleteReason);
-	public int update(Users user);
-	public int updateUser(@Param("user")Users user, @Param("userState")int userState);
-	public String findById(@Param("userName") String userName, @Param("userPhone")String userPhone); 
-	public int selectByUserCount(Users user);
-	public int updatePassword(Users user);
-	public int selectByOverlapId(Users user);
+	
 	public int count();
 	public List<Users> selectByPage(Pager pager);
-	public int delete(int uid);
 	public int stateCount(@Param("deleteState")int userState);
 	public List<Users> selectByStatePage(@Param("pager")Pager pager, @Param("deleteState")int userState);
 	public List<Users> selectByUserPage(@Param("pager")Pager pager, @Param("keyword")String idKeywordVal);
 	public int stateKeywordCount(@Param("deleteState")int userState, @Param("keyword")String idKeywordVal);
 	public List<Users> selectByStateKeywordPage(@Param("pager")Pager pager,@Param("deleteState") int userState,@Param("keyword") String idKeywordVal);
 	public int keywordCount(@Param("keyword")String idKeywordVal);
+	public Users selectByUserid(String userId); 
+	public int updateUser(@Param("user")Users user, @Param("userState")int userState);
 }

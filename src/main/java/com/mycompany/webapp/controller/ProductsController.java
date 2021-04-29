@@ -104,7 +104,6 @@ public class ProductsController {
 	public Products create(Products product) {
 		productsService.insert(product);
 
-		int count = 0;
 		if(product.getBattach() != null && !(product.getBattach().length == 0)) {
 			MultipartFile[] mf = product.getBattach();
 			for(int i=0; i<mf.length; i++) {
@@ -112,7 +111,6 @@ public class ProductsController {
 				product.setImgSname(new Date().getTime() + "-" + mf[i].getOriginalFilename());
 				product.setImgType("jpg");
 				product.setImgState(i+1);
-
 				try {
 					File file;
 					if(product.getProductCategoryNo() == 1) {
@@ -238,11 +236,6 @@ public class ProductsController {
 
 		product.setBattach(null);
 		return product;
-	}
-
-	@DeleteMapping("/{pid}")
-	public void delete(@PathVariable int pid) {
-		productsService.delete(pid);
 	}
 	
 	
