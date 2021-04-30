@@ -6,11 +6,11 @@
 
 	<select id="count" parameterType="String" resultType="int">
 		select count(*) 
-		from reviews r, products p
-		where r.product_no = p.product_no
+		from reviews r, products p, orders o
+    where r.product_no = p.product_no
+	     and r.order_no = o.order_no
 		<if test='keyword != ""'>
-			and (review_content LIKE '%'||#{keyword}||'%' or user_id LIKE '%'||#{keyword}||'%'
-						or p.product_name  LIKE '%'||#{keyword}||'%' )
+			and (r.review_content LIKE '%'||#{keyword}||'%' or p.product_name LIKE '%'||#{keyword}||'%')
 		</if>
 	</select>
 	
@@ -21,17 +21,17 @@
         			 reviewNo, orderNo, productNo, productName, userId, reviewContent, reviewRegdate
         from (
             select r.review_no as reviewNo, 
-								   r.	order_no as orderNo,
+								   r.order_no as orderNo,
 								   r.product_no as productNo, 
 								   p.product_name as productName, 
 								   r.user_id as userId, 
 								   r.review_content as reviewContent, 
 								   r.review_regdate as reviewRegdate
-            from reviews r, products p
+            from reviews r, products p, orders o
             where r.product_no = p.product_no
+	            and r.order_no = o.order_no
             <if test='keyword != ""'>
-							and r.review_content LIKE '%'||#{keyword}||'%' or r.user_id LIKE '%'||#{keyword}||'%'
-									or p.product_name  LIKE '%'||#{keyword}||'%' 
+							and (r.review_content LIKE '%'||#{keyword}||'%' or p.product_name LIKE '%'||#{keyword}||'%') 
 						</if>
             order by review_regdate desc
         )

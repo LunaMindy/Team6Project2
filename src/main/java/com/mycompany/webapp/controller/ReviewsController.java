@@ -52,7 +52,7 @@ private final Logger logger = LoggerFactory.getLogger(ReviewsController.class);
 	public int readCount(int countNo) {
 		int result;
 		if(countNo == 0) {
-			result = orderProductsService.getCount(2);
+			result = reviewsService.getCount("");
 		} else if(countNo == 1) {
 			result = orderProductsService.getCount(0);
 		}  else {
